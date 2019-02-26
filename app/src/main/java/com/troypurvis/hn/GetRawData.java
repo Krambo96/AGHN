@@ -3,18 +3,25 @@ package com.troypurvis.hn;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetRawData extends AsyncTask<String, Void, String> {
     private static final String TAG = "GetRawData";
 
     private final OnDownloadComplete mCallBack;
 
+    List<JSONObject> list = new ArrayList<>();
+
     interface OnDownloadComplete{
-        void onDownloadComplete(String data);
+        void onDownloadComplete(List<JSONObject> data);
     }
 
     public GetRawData(OnDownloadComplete callback){
@@ -23,7 +30,24 @@ public class GetRawData extends AsyncTask<String, Void, String> {
 
     protected void onPostExecute(String s){
         if(mCallBack != null){
-            mCallBack.onDownloadComplete(s);
+            Log.d(TAG, "onPostExecute getrawdata: starts");
+            ParseNews pn = new ParseNews(mCallBack);
+            try{
+                JSONArray jsonArray = new JSONArray(s);
+
+                String[] str = new String[jsonArray.length()];
+                for(int i = 0; i < jsonArray.length(); i++){
+                    str[i] = jsonArray.get(i).toString();
+                }
+
+                pn.execute(str);
+
+            }catch(Exception e){
+
+            }
+
+
+            //mCallBack.onDownloadComplete(s);
         }
     }
 

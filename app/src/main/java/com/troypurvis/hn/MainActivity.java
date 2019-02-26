@@ -9,7 +9,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements GetJsonData.OnDataAvailable {
     private static final String TAG = "MainActivity";
     List<String> topStories = null;
-
+    List<NewsPost> ts = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,13 +20,17 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
     }
 
     @Override
-    public void onDataAvailable(List<String> data) {
-        for(String s : data){
-            Log.d(TAG, "onDataAvailable: " + s);
-        }
+    public void onDataAvailable(List<NewsPost> data) {
 
-        topStories = data;
+        ts = data;
 
+        //for each post id in topStories, create a new NewsPost item from it (get all information
+        //associated w/ the post)
+        construct();
+
+    }
+
+    public void construct(){
 
     }
 }
