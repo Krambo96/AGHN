@@ -1,5 +1,6 @@
 package com.troypurvis.hn;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -8,13 +9,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetJsonData implements GetRawData.OnDownloadComplete {
+public class GetJsonData extends AsyncTask<String, Void, List<NewsPost>> implements GetRawData.OnDownloadComplete {
     private static final String TAG = "GetJsonData";
 
     List<String> storyList = new ArrayList<>();
     List<NewsPost> news = new ArrayList<>();
     private final OnDataAvailable mCallBack;
-
+    private boolean runningOnSameThread = false;
 
     interface OnDataAvailable{
         void onDataAvailable(List<NewsPost> data);
@@ -29,6 +30,21 @@ public class GetJsonData implements GetRawData.OnDownloadComplete {
         GetRawData getRawData = new GetRawData(this);
         getRawData.execute("https://hacker-news.firebaseio.com/v0/topstories.json");
         Log.d(TAG, "executeOnSameThread: ends");
+    }
+
+    @Override
+    protected void onPostExecute(List<NewsPost> newsPosts) {
+        if(mCallBack != null){
+            mCallBack.onDataAvailable(news);
+        }
+    }
+
+    @Override
+    protected List<NewsPost> doInBackground(String... strings) {
+        GetRawData getRawData = new GetRawData(this);
+        getRawData.runInSameThread(strings[0]);
+
+        return news;
     }
 
     @Override
@@ -57,6 +73,8 @@ public class GetJsonData implements GetRawData.OnDownloadComplete {
         if(mCallBack != null){
             mCallBack.onDataAvailable(news);
         }
+
+
         Log.d(TAG, "onDownloadComplete: ends");
     }
 

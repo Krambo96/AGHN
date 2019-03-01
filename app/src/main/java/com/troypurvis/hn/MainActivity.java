@@ -16,7 +16,8 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
         setContentView(R.layout.activity_main);
 
         GetJsonData getJsonData = new GetJsonData(this);
-        getJsonData.executeOnSameThread();
+        //getJsonData.executeOnSameThread();
+        getJsonData.execute("https://hacker-news.firebaseio.com/v0/topstories.json");
     }
 
     @Override

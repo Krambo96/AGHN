@@ -28,6 +28,11 @@ public class GetRawData extends AsyncTask<String, Void, String> {
         mCallBack = callback;
     }
 
+
+    void runInSameThread(String s){
+        onPostExecute(doInBackground(s));
+    }
+
     protected void onPostExecute(String s){
         if(mCallBack != null){
             Log.d(TAG, "onPostExecute getrawdata: starts");
@@ -40,7 +45,8 @@ public class GetRawData extends AsyncTask<String, Void, String> {
                     str[i] = jsonArray.get(i).toString();
                 }
 
-                pn.execute(str);
+
+                pn.executeOnSameThread(str);
 
             }catch(Exception e){
 

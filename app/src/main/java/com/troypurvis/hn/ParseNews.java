@@ -21,9 +21,16 @@ public class ParseNews extends AsyncTask<String, Void, List<JSONObject>> {
         this.mCallBack = callBack;
     }
 
+
+    void executeOnSameThread(String[] str){
+        Log.d(TAG, "executeOnSameThread: starts");
+        onPostExecute(doInBackground(str));
+        Log.d(TAG, "executeOnSameThread: ends");
+    }
+
     @Override
     protected void onPostExecute(List<JSONObject> jsonObjects) {
-
+        Log.d(TAG, "onPostExecute: starts");
         if(mCallBack != null && jsonObjects != null){
             mCallBack.onDownloadComplete(jsonObjects);
         }
@@ -31,6 +38,7 @@ public class ParseNews extends AsyncTask<String, Void, List<JSONObject>> {
 
     @Override
     protected List<JSONObject> doInBackground(String... strings) {
+        Log.d(TAG, "doInBackground: starts");
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 
