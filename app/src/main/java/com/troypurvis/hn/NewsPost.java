@@ -26,4 +26,32 @@ public class NewsPost {
                 ", title='" + title + '\'' +
                 ", type='" + type + '\'';
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String[] getKids() {
+        return kids;
+    }
 }
