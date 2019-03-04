@@ -1,5 +1,7 @@
 package com.troypurvis.hn;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,13 +24,6 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
-
         GetJsonData getJsonData = new GetJsonData(this);
         //getJsonData.executeOnSameThread();
         getJsonData.execute("https://hacker-news.firebaseio.com/v0/topstories.json");
@@ -36,7 +31,11 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        String url = adapter.getItem(position).url;
+
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
     @Override
@@ -53,7 +52,10 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyRecyclerViewAdapter(this, data);
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+
+
 
     }
 

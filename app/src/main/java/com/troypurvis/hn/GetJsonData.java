@@ -60,9 +60,11 @@ public class GetJsonData extends AsyncTask<String, Void, List<NewsPost>> impleme
                 String time = j.getString("time");
                 String title = j.getString("title");
                 String type = j.getString("type");
+                String url = j.getString("url");
                 //TODO: Kids
 
                 NewsPost n = new NewsPost(author, id, score, time, title, type);
+                n.setUrl(url);
                 news.add(n);
                 Log.d(TAG, "onDownloadComplete: New newspost item: " + n.toString());
             }

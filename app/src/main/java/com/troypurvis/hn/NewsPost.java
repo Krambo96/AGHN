@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class NewsPost {
 
-    String author, id, score, time, title, type;
+    String author, id, score, time, title, type, url;
     String[] kids;
 
     public NewsPost(String author, String id, String score, String time, String title, String type) {
@@ -53,5 +53,9 @@ public class NewsPost {
 
     public String[] getKids() {
         return kids;
+    }
+
+    public void setUrl(String s){
+        this.url = s;
     }
 }
