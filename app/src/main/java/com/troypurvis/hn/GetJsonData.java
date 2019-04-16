@@ -60,7 +60,12 @@ public class GetJsonData extends AsyncTask<String, Void, List<NewsPost>> impleme
                 String time = j.getString("time");
                 String title = j.getString("title");
                 String type = j.getString("type");
-                String url = j.getString("url");
+                String url;
+                if(j.has("url")){
+                    url = j.getString("url");
+                }else{
+                    url = "http://www.google.com"; //placeholder, should be set to ycombinator
+                }
                 //TODO: Kids
 
                 NewsPost n = new NewsPost(author, id, score, time, title, type);

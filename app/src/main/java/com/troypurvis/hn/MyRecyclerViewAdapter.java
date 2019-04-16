@@ -2,14 +2,20 @@ package com.troypurvis.hn;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.net.URL;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-
+    final String TAG = "MyRecyclerViewAdapter";
     private List<NewsPost> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
@@ -30,8 +36,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NewsPost animal = mData.get(position);
-        holder.myTextView.setText(animal.title);
+        try {
+            NewsPost newsPost = mData.get(position);
+            holder.myTextView.setText(newsPost.title);
+            URL url = new URL(newsPost.url);
+            String base = url.getProtocol() + "://" + url.getHost() + "/favicon.ico";
+
+
+            Log.d(TAG, "onBindViewHolder: favicon link: " + base);
+            Picasso.get().load(base).into(holder.myImageView);
+        }catch(Exception e){
+            Log.d(TAG, "onBindViewHolder: failed");
+        }
     }
 
     // total number of rows
@@ -44,10 +60,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        ImageView myImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.title);
+            myImageView = itemView.findViewById(R.id.thumbnail);
             itemView.setOnClickListener(this);
         }
 
