@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
     List<String> topStories = null;
     List<NewsPost> ts = null;
     MyRecyclerViewAdapter adapter;
+    ImageView trending;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,15 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
         GetJsonData getJsonData = new GetJsonData(this);
         //getJsonData.executeOnSameThread();
         getJsonData.execute("https://hacker-news.firebaseio.com/v0/topstories.json");
+
+        trending = (ImageView)findViewById(R.id.trending);
+        trending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, TrendingActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -54,9 +65,6 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
         adapter = new MyRecyclerViewAdapter(this, data);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
-
-
-
     }
 
 }
