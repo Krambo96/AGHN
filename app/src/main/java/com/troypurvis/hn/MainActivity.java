@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, TrendingActivity.class);
+                i.putExtra("size", ts.size());
+                for(int j = 0; j < ts.size(); j++){
+                    i.putExtra(Integer.toString(j), ts.get(j));
+                }
                 startActivity(i);
             }
         });
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
     @Override
     public void onDataAvailable(List<NewsPost> data) {
         Log.d(TAG, "onDataAvailable: begins ----> " + data.size());
-
+        ts = data;
         /*
         List<NewsPost> list = new ArrayList<>();
         for(int i = 0; i < 25; i++){
