@@ -39,9 +39,10 @@ public class GetRawData extends AsyncTask<String, Void, String> {
             ParseNews pn = new ParseNews(mCallBack);
             try{
                 JSONArray jsonArray = new JSONArray(s);
-                //30 = number of posts fetched
-                String[] str = new String[30];
-                for(int i = 0; i < 30; i++){
+                //n = number of posts fetched
+                int n = 200;
+                String[] str = new String[n];
+                for(int i = 0; i < n; i++){
                     str[i] = jsonArray.get(i).toString();
                 }
 

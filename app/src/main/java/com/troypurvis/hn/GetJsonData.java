@@ -64,7 +64,7 @@ public class GetJsonData extends AsyncTask<String, Void, List<NewsPost>> impleme
                 if(j.has("url")){
                     url = j.getString("url");
                 }else{
-                    url = "http://www.google.com"; //placeholder, should be set to ycombinator
+                    url = "http://www.google.com"; //TODO: placeholder, should be set to ycombinator
                 }
                 //TODO: Kids
 
