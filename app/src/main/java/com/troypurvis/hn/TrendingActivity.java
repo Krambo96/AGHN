@@ -2,6 +2,8 @@ package com.troypurvis.hn;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,7 @@ import java.util.List;
 public class TrendingActivity extends AppCompatActivity {
     final String TAG = "TrendingActivity";
     List<NewsPost> data = new ArrayList<>();
+    TrendingRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,12 @@ public class TrendingActivity extends AppCompatActivity {
             }
         }
 
+
+
+        RecyclerView recyclerView = findViewById(R.id.trendingrecyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new TrendingRecyclerViewAdapter(this, new ArrayList<List<String>>());
+        recyclerView.setAdapter(adapter);
     }
 
 }
