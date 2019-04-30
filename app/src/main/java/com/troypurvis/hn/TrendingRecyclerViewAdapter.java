@@ -17,6 +17,8 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter<TrendingRe
     List<List<String>> mData;
     LayoutInflater mInflater;
     MyRecyclerViewAdapter.ItemClickListener mClickListener;
+    int dayOfWeek;
+    String[] days = new String[]{"Sun", "Sat", "Fri", "Thurs", "Wed", "Tues", "Mon"};
 
     TrendingRecyclerViewAdapter(Context context, List<List<String>> data){
         this.mInflater = LayoutInflater.from(context);
@@ -39,6 +41,9 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter<TrendingRe
             viewHolder.text[j].setText(list.get(j));
         }
 
+        int day = (dayOfWeek + i) % 7;
+
+        viewHolder.iv.setText(days[day]);
     }
 
     @Override
@@ -53,7 +58,7 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter<TrendingRe
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView[] text;
-        ImageView iv;
+        TextView iv;
 
         ViewHolder(View itemView){
             super(itemView);
@@ -66,11 +71,21 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter<TrendingRe
             text[3] = itemView.findViewById(R.id.tv4);
             text[4] = itemView.findViewById(R.id.tv5);
             iv = itemView.findViewById(R.id.pic);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (mClickListener != null) mClickListener.onItemClick(v, getAdapterPosition());
         }
+
+    }
+
+    void setClickListener(MyRecyclerViewAdapter.ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    void setDayOfWeek(int val){
+        this.dayOfWeek = val;
     }
 }

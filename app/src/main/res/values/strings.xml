@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">HN</string>
     <string name="title_activity_trending">TrendingActivity</string>
+    <string name="title_activity_detail_trending">DetailTrending</string>
 </resources>

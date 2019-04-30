@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class TrendingActivity extends AppCompatActivity {
+public class TrendingActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
     final String TAG = "TrendingActivity";
     List<NewsPost> data = new ArrayList<>();
     TrendingRecyclerViewAdapter adapter;
@@ -66,7 +66,6 @@ public class TrendingActivity extends AppCompatActivity {
             }
         }
 
-
         //for each day in hs, get top 5 most upvoted posts
         for(int i = 0; i < 6; i++){
             /*
@@ -107,12 +106,28 @@ public class TrendingActivity extends AppCompatActivity {
             }
         }
 
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
 
 
+        int dayOfWeek = 7 - (c.get(Calendar.DAY_OF_WEEK) - 1);
+
+        Log.d(TAG, "onCreate: day of week: " + dayOfWeek);
         RecyclerView recyclerView = findViewById(R.id.trendingrecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TrendingRecyclerViewAdapter(this, words);
+        adapter.setDayOfWeek(dayOfWeek);
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
 
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Log.d(TAG, "onItemClick: entered");
+
+        List<NewsPost> list = hs.get(position);
+
+
+    }
 }
