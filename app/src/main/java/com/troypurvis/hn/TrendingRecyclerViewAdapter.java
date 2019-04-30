@@ -32,13 +32,18 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter<TrendingRe
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        ImageView iv = viewHolder.iv;
+
+        List<String> list = mData.get(i);
+
+        for(int j = 0; j < list.size(); j++){
+            viewHolder.text[j].setText(list.get(j));
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mData.size();
     }
 
     List<String> getItem(int idx){

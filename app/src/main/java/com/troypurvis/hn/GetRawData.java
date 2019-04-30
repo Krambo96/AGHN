@@ -40,7 +40,7 @@ public class GetRawData extends AsyncTask<String, Void, String> {
             try{
                 JSONArray jsonArray = new JSONArray(s);
                 //n = number of posts fetched
-                int n = 200;
+                int n = 400;
                 String[] str = new String[n];
                 for(int i = 0; i < n; i++){
                     str[i] = jsonArray.get(i).toString();

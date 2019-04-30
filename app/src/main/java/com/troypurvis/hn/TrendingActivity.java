@@ -10,18 +10,37 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class TrendingActivity extends AppCompatActivity {
     final String TAG = "TrendingActivity";
     List<NewsPost> data = new ArrayList<>();
     TrendingRecyclerViewAdapter adapter;
+    List<List<String>> words;
+    HashMap<Integer, List<NewsPost>> hs;
+    HashMap<String, Integer> map;
 
+    String[] banned = new String[]{"to", "the", "a", "of", "hn:", "hn", "and", "using", "with", "for"};
+    HashSet<String> bannedSet = new HashSet<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trending);
+
+        for(String s : banned)
+            bannedSet.add(s);
+
+        words = new ArrayList<>();
+        hs = new HashMap<>();
+        for(int i = 0; i < 6; i++){
+            words.add(new ArrayList<String>());
+            hs.put(i, new ArrayList<NewsPost>());
+        }
 
         final Bundle extras = getIntent().getExtras();
 
@@ -40,8 +59,33 @@ public class TrendingActivity extends AppCompatActivity {
             if(numDays <= 7) {
                 data.add(p);
                 Log.d(TAG, "onCreate: Post is recent! : " + numDays);
+                hs.get(numDays).add(p);
             }else{
                 Log.d(TAG, "onCreate: too old to add");
+            }
+        }
+
+
+        //for each day in hs, get top 5 most upvoted posts
+        for(int i = 0; i < 6; i++){
+            PriorityQueue<NewsPost> pq = new PriorityQueue<>(new Comparator<NewsPost>() {
+                @Override
+                public int compare(NewsPost o1, NewsPost o2) {
+                    int a = Integer.parseInt(o1.score), b = Integer.parseInt(o2.score);
+
+                    return b - a;
+                }
+            });
+
+            for(NewsPost n : hs.get(i)){
+                pq.add(n);
+            }
+
+            for(int j = 0; j < 5; j++){
+                NewsPost n = pq.poll();
+
+                if(n != null)
+                    words.get(i).add(n.title);
             }
         }
 
@@ -49,7 +93,7 @@ public class TrendingActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.trendingrecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TrendingRecyclerViewAdapter(this, new ArrayList<List<String>>());
+        adapter = new TrendingRecyclerViewAdapter(this, words);
         recyclerView.setAdapter(adapter);
     }
 
