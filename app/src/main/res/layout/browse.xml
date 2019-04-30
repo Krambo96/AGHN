@@ -18,6 +18,7 @@
         android:id="@+id/thumbnail"
         android:layout_width="68dp"
         android:layout_height="84dp"
+        android:src="@drawable/hackernews"
         app:srcCompat="@drawable/hackernews" />
 
 

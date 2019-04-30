@@ -10,6 +10,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,6 +69,7 @@ public class TrendingActivity extends AppCompatActivity {
 
         //for each day in hs, get top 5 most upvoted posts
         for(int i = 0; i < 6; i++){
+            /*
             PriorityQueue<NewsPost> pq = new PriorityQueue<>(new Comparator<NewsPost>() {
                 @Override
                 public int compare(NewsPost o1, NewsPost o2) {
@@ -86,6 +88,22 @@ public class TrendingActivity extends AppCompatActivity {
 
                 if(n != null)
                     words.get(i).add(n.title);
+            }
+            */
+
+            Collections.sort(hs.get(i), new Comparator<NewsPost>() {
+                @Override
+                public int compare(NewsPost o1, NewsPost o2) {
+                    int a = Integer.parseInt(o1.score), b = Integer.parseInt(o2.score);
+
+                    return b - a;
+                }
+            });
+            List<NewsPost> list = hs.get(i);
+            for(int j = 0; j < 5; j++){
+                if(list.size() > j){
+                    words.get(i).add(list.get(j).title);
+                }
             }
         }
 
