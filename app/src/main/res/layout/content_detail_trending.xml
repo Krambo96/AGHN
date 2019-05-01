@@ -9,5 +9,13 @@
     tools:showIn="@layout/activity_detail_trending">
 
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailedrecyclerview">
+
+
+    </android.support.v7.widget.RecyclerView>
+
 
 </android.support.constraint.ConstraintLayout>

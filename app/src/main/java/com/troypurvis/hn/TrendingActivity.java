@@ -1,5 +1,6 @@
 package com.troypurvis.hn;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -128,6 +129,12 @@ public class TrendingActivity extends AppCompatActivity implements MyRecyclerVie
 
         List<NewsPost> list = hs.get(position);
 
+        Intent i = new Intent(TrendingActivity.this, DetailTrending.class);
+        i.putExtra("size", list.size());
+        for(int j = 0; j < list.size(); j++){
+            i.putExtra(Integer.toString(j), list.get(j));
+        }
 
+        startActivity(i);
     }
 }
