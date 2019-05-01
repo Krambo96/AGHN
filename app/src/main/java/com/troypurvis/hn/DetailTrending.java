@@ -17,7 +17,7 @@ import java.util.List;
 public class DetailTrending extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
     List<NewsPost> data;
     MyRecyclerViewAdapter adapter;
-
+    String[] days = new String[]{"Sunday", "Saturday", "Friday", "Thursday", "Wednesday", "Tuesday", "Monday"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +29,9 @@ public class DetailTrending extends AppCompatActivity implements MyRecyclerViewA
         Bundle b = getIntent().getExtras();
 
         int size = b.getInt("size");
-
+        int day = b.getInt("day");
+        String title = "Top posts for " + days[day];
+        setTitle(title);
         for(int i = 0; i < size; i++){
             NewsPost p = (NewsPost)getIntent().getParcelableExtra(Integer.toString(i));
             data.add(p);

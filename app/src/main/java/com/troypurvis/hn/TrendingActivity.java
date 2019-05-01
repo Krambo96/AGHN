@@ -27,9 +27,8 @@ public class TrendingActivity extends AppCompatActivity implements MyRecyclerVie
     List<List<String>> words;
     HashMap<Integer, List<NewsPost>> hs;
     HashMap<String, Integer> map;
+    int dayOfWeek;
 
-    String[] banned = new String[]{"to", "the", "a", "of", "hn:", "hn", "and", "using", "with", "for"};
-    HashSet<String> bannedSet = new HashSet<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +38,18 @@ public class TrendingActivity extends AppCompatActivity implements MyRecyclerVie
         iv.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: homepage button clicked");
                 finish();
             }
         });
-        for(String s : banned)
-            bannedSet.add(s);
+
+        ImageView iv2 = (ImageView) findViewById(R.id.trendingtrending);
+        iv.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //do nothing, we're already on the trending page
+            }
+        });
 
         words = new ArrayList<>();
         hs = new HashMap<>();
@@ -77,27 +83,6 @@ public class TrendingActivity extends AppCompatActivity implements MyRecyclerVie
 
         //for each day in hs, get top 5 most upvoted posts
         for(int i = 0; i < 6; i++){
-            /*
-            PriorityQueue<NewsPost> pq = new PriorityQueue<>(new Comparator<NewsPost>() {
-                @Override
-                public int compare(NewsPost o1, NewsPost o2) {
-                    int a = Integer.parseInt(o1.score), b = Integer.parseInt(o2.score);
-
-                    return b - a;
-                }
-            });
-
-            for(NewsPost n : hs.get(i)){
-                pq.add(n);
-            }
-
-            for(int j = 0; j < 5; j++){
-                NewsPost n = pq.poll();
-
-                if(n != null)
-                    words.get(i).add(n.title);
-            }
-            */
 
             Collections.sort(hs.get(i), new Comparator<NewsPost>() {
                 @Override
@@ -119,7 +104,7 @@ public class TrendingActivity extends AppCompatActivity implements MyRecyclerVie
         c.setTime(new Date());
 
 
-        int dayOfWeek = 7 - (c.get(Calendar.DAY_OF_WEEK) - 1);
+        dayOfWeek = 7 - (c.get(Calendar.DAY_OF_WEEK) - 1);
 
         Log.d(TAG, "onCreate: day of week: " + dayOfWeek);
         RecyclerView recyclerView = findViewById(R.id.trendingrecyclerview);
@@ -137,8 +122,12 @@ public class TrendingActivity extends AppCompatActivity implements MyRecyclerVie
 
         List<NewsPost> list = hs.get(position);
 
+        int day = (dayOfWeek + position) % 7;
+
         Intent i = new Intent(TrendingActivity.this, DetailTrending.class);
         i.putExtra("size", list.size());
+        Log.d(TAG, "onItemClick: day: " + day);
+        i.putExtra("day", day);
         for(int j = 0; j < list.size(); j++){
             i.putExtra(Integer.toString(j), list.get(j));
         }

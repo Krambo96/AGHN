@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
                 startActivity(i);
             }
         });
+
+        ImageView home = (ImageView)findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //do nothing
+            }
+        });
     }
 
     @Override
