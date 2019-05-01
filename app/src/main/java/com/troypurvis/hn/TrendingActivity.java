@@ -1,6 +1,7 @@
 package com.troypurvis.hn;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,8 @@ public class TrendingActivity extends AppCompatActivity implements MyRecyclerVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trending);
+
+        getWindow().setStatusBarColor(Color.BLACK);
 
         ImageView iv = (ImageView) findViewById(R.id.hometrending);
         iv.setOnClickListener(new View.OnClickListener(){

@@ -1,6 +1,9 @@
 package com.troypurvis.hn;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements GetJsonData.OnDat
         //getJsonData.executeOnSameThread();
         getJsonData.execute("https://hacker-news.firebaseio.com/v0/topstories.json");
 
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ff8000")));
+        getWindow().setStatusBarColor(Color.BLACK);
         trending = (ImageView)findViewById(R.id.trending);
         trending.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,8 @@
 package com.troypurvis.hn;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +26,10 @@ public class DetailTrending extends AppCompatActivity implements MyRecyclerViewA
         setContentView(R.layout.activity_detail_trending);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        getWindow().setStatusBarColor(Color.BLACK);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ff8000")));
 
         data = new ArrayList<>();
         Bundle b = getIntent().getExtras();

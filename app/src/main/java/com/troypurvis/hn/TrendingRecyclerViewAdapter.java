@@ -42,8 +42,12 @@ public class TrendingRecyclerViewAdapter extends RecyclerView.Adapter<TrendingRe
         }
 
         int day = (dayOfWeek + i) % 7;
+        if(day == dayOfWeek){
+            viewHolder.iv.setText("Today");
+        }else{
+            viewHolder.iv.setText(days[day]);
+        }
 
-        viewHolder.iv.setText(days[day]);
     }
 
     @Override
