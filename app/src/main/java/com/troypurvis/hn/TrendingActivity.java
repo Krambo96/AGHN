@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +35,13 @@ public class TrendingActivity extends AppCompatActivity implements MyRecyclerVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trending);
 
+        ImageView iv = (ImageView) findViewById(R.id.hometrending);
+        iv.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         for(String s : banned)
             bannedSet.add(s);
 
